@@ -11,7 +11,7 @@ class Chat extends Component {
     this.state = {
       messages: [{
         author: 'Test',
-        message: 'Foo'
+        content: 'Foo'
       }]
     };
   }
@@ -23,31 +23,26 @@ class Chat extends Component {
     });
   }
 
-  handleData(data) {
-    console.log('chat: received new data')
-    const newMessages = update(this.state.messages, {
-      $push: [data]
-    });
-    this.setState({messages: newMessages});
-  }
-
-  messageList() {
-    return this.state.messages.map((message) => {
-      (<div>{message.author}: {message.content}</div>)
-    });
-  }
-
   render() {
-    // ??? why isn't this rendering?
-    const messages = this.state.messages.map((message, i) => {
-      <div key={i}>{message.content}</div>
-    });
     return (
       <div>
         <h1>Messages</h1>
-        {messages}
+        {this.messageList()}
       </div>        
     );
+  }
+
+  handleData(data) {
+    console.log('chat: received new data')
+    this.setState((prevState) => {
+        return { messages: prevState.messages.concat(data) }
+    });
+  }
+
+  messageList() {
+    return this.state.messages.map((message, i) => {
+      return <div key={i}>{message.content}</div>
+    });
   }
 }
 
