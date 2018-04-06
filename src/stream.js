@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Chat from './chat';
-import Nav from './nav';
+import './global.css';
 import './stream.css';
 
 export const Stream = (props) => {
@@ -24,24 +24,15 @@ export const Stream = (props) => {
   )
 }
 
-export class StreamScreen extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-        <div>
-          {<Nav/>}
-          <main className="wrapper">
-            <div className="stream element">
-              <Stream />
-            </div>
-            <div className="chat element">
-              <Chat />
-            </div>
-          </main>
-        </div>
-    );
-  }
+export const StreamScreen = (props) => {
+  return (
+      <section className="stream-container container ">        
+        <main className="stream">
+          <Stream />
+        </main>
+        <aside className="chat"><div class="inner">
+          <Chat />
+        </div></aside>
+      </section>
+  );
 }

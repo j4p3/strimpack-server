@@ -1,0 +1,21 @@
+.container.chat-container {
+  height: 100%;
+}
+
+.messages {
+  flex: 1;
+}
+
+.input {
+  flex: 0;
+}
+
+.input > .inner {
+  height: 100px;
+}
+
+@media screen and (min-width: 959px) {
+  .input > .inner {
+    height: 100px;
+  }
+}

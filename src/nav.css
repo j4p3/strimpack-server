@@ -1,4 +1,5 @@
 nav {
+  flex: 0;
   height: 0;
   display: none;
   background: #333;

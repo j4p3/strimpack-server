@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import update from 'react-addons-update';
 
 import Store from './store';
+import './global.css'
 import './chat.css'
+
 
 class Chat extends Component {
   constructor(props) {
@@ -12,8 +14,12 @@ class Chat extends Component {
       messages: [{
         author: 'Test',
         content: 'Foo'
-      }]
+      }],
+      input: ''
     };
+
+    this.handleInput = this.handleInput.bind(this);
+    this.handleKey = this.handleKey.bind(this);
   }
 
   componentDidMount() {
@@ -25,24 +31,57 @@ class Chat extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Messages</h1>
-        {this.messageList()}
-      </div>        
+      <section className="chat-container container vertical ">
+        <div className="messages">
+          {this.messageList()}
+        </div>
+        <div className="input"><div className="inner">
+          {this.input()}
+        </div></div>
+      </section>
     );
   }
 
   handleData(data) {
     console.log('chat: received new data')
     this.setState((prevState) => {
-        return { messages: prevState.messages.concat(data) }
+        return { messages: prevState.messages.concat(data) };
     });
+  }
+
+  handleInput(evt) {
+    this.setState({input: evt.target.value});
+  }
+
+  handleKey(evt) {
+    if (evt.keyCode === 13) {
+      const message = {
+        author: 'react',
+        content: this.state.input
+      };
+      this.store.broadcast(message);
+      this.setState((prevState) => {
+        return {
+          input: '',
+          messages: prevState.messages.concat(message)
+        };
+      });
+    }
   }
 
   messageList() {
     return this.state.messages.map((message, i) => {
       return <div key={i}>{message.content}</div>
     });
+  }
+
+  input() {
+    return (
+      <input type="text"
+             value={this.state.input}
+             onChange={this.handleInput}
+             onKeyDown={this.handleKey} />
+    );
   }
 }
 

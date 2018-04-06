@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container.vertical {
+  flex-direction: column;
+}
+
+.accent {
+  color: #bb6125;
+}
+
+@media screen and (min-width: 959px) {
+  .container {
+    flex-direction: row;
+  }
+}

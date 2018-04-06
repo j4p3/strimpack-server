@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { StreamScreen } from './stream';
+import Nav from './nav';
 import logo from './logo.svg';
+import './app.css';
 
 class App extends Component {
   render() {
-    return (<StreamScreen/>);
+    return (
+      <div className="root vertical container">
+        <Nav />
+        <StreamScreen />
+      </div>
+    );
   }
 }
 
