@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Chat from './chat';
 import './global.css';
 import './stream.css';
@@ -9,18 +9,16 @@ export const Stream = (props) => {
   }
   const inheretedProps = {...defaults, ...props};
   return (
-    <div>
-      {/*      <iframe
-        className="embedded"
-        src="//player.twitch.tv/?channel=neuro"
-        marginheight="0"
-        marginwidth="0"
-        frameborder="0"
-        scrolling="no"
-        allowfullscreen={inheretedProps['allowfullscreen']}>
-      </iframe>*/}
-      <h1>here</h1>
-    </div>
+    <iframe
+      title="stream"
+      className="embedded"
+      src="//player.twitch.tv/?channel=neuro"
+      marginHeight="0"
+      marginWidth="0"
+      frameBorder="0"
+      scrolling="no"
+      allowFullScreen={inheretedProps['allowfullscreen']}>
+    </iframe>
   )
 }
 
@@ -30,7 +28,7 @@ export const StreamScreen = (props) => {
         <main className="stream">
           <Stream />
         </main>
-        <aside className="chat"><div class="inner">
+        <aside className="chat"><div className="inner">
           <Chat />
         </div></aside>
       </section>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import update from 'react-addons-update';
-
 import Store from './store';
 import './global.css'
 import './chat.css'
