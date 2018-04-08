@@ -1,21 +1,41 @@
 .container.chat-container {
   height: 100%;
+
+  border-top: 1px solid #444;
+  background: #333;
+  color: #fff;
 }
 
 .messages {
   flex: 1;
+
+  overflow-y: scroll;
+  padding: 1em 1em;
+  color: #fff;
+}
+
+.message {
+  line-height: 1.5em;
+  margin-bottom: .25em;
 }
 
 .input {
   flex: 0;
+
+  padding: 1em 1em 0 1em;
 }
 
 .input > .inner {
   height: 100px;
 }
 
+.input textarea {
+  width: 100%;
+  height: 4em;
+}
+
 @media screen and (min-width: 959px) {
   .input > .inner {
-    height: 100px;
+    height: 4em;
   }
 }

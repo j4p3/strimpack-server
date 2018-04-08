@@ -4,21 +4,18 @@ import './global.css';
 import './stream.css';
 
 export const Stream = (props) => {
-  const defaults = {
-    allowfullscreen: 'true'
-  }
-  const inheretedProps = {...defaults, ...props};
   return (
-    <iframe
-      title="stream"
-      className="embedded"
-      src="//player.twitch.tv/?channel=neuro"
-      marginHeight="0"
-      marginWidth="0"
-      frameBorder="0"
-      scrolling="no"
-      allowFullScreen={inheretedProps['allowfullscreen']}>
-    </iframe>
+    <h1>here
+    {/*<iframe
+          title="stream"
+          className="embedded"
+          src="//player.twitch.tv/?channel=neuro"
+          marginHeight="0"
+          marginWidth="0"
+          frameBorder="0"
+          scrolling="no">
+        </iframe>*/}
+      </h1>
   )
 }
 
