@@ -7,21 +7,52 @@ import './chat.css'
 
 class MessageInput extends Component {
   constructor(props) {
+    // 
+    // Expected property: 'send' function
+    // 
+    if (!props.hasOwnProperty('send')) {
+      throw new Error('MessageInput Missing }send prop.')
+    }
+
     super(props);
+
     this.el = React.createRef();
+
+    this.state = {
+      value: ''
+    };
+
+    this.handleKey = this.handleKey.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   componentDidMount() {
     this.el.current.focus()
   }
 
+  handleInput(evt) {
+    this.setState({ value: evt.target.value });
+  }
+
+  handleKey(evt) {
+    if (evt.keyCode === 13) {
+      evt.preventDefault();
+      if (this.state.value) {
+        this.props.send(this.state.value);
+        this.setState({ value: '' });
+      }
+    } else {
+      this.setState({ value: evt.target.value }); 
+    }
+  }
+
   render() {
     return (
       <textarea type="text"
                 ref={this.el}
-                value={this.props.value}
-                onChange={this.props.onChange}
-                onKeyDown={this.props.onKeyDown} />
+                value={this.state.value}
+                onKeyDown={this.handleKey}
+                onChange={this.handleInput} />
     );
   }
 }
@@ -84,11 +115,10 @@ class Chat extends Component {
         author: 'Test',
         content: 'Foo'
       }],
-      input: ''
+      author: 'Test'
     };
 
-    this.handleInput = this.handleInput.bind(this);
-    this.handleKey = this.handleKey.bind(this);
+    this.send = this.send.bind(this);
   }
 
   componentDidMount() {
@@ -107,20 +137,9 @@ class Chat extends Component {
       <section className="chat-container container vertical ">
         <MessageList messages={this.state.messages} />
         <div className="input"><div className="inner">
-          <MessageInput value={this.state.input}
-                        onChange={this.handleInput}
-                        onKeyDown={this.handleKey} />
+          <MessageInput send={this.send} />
         </div></div>
       </section>
-    );
-  }
-
-  input() {
-    return (
-      <textarea type="text"
-             value={this.state.input}
-             onChange={this.handleInput}
-             onKeyDown={this.handleKey} />
     );
   }
 
@@ -129,30 +148,23 @@ class Chat extends Component {
   // 
 
   handleData(data) {
-    console.log('chat: received new data')
     this.setState((prevState) => {
         return { messages: prevState.messages.concat(data) };
     });
   }
 
-  handleInput(evt) {
-    this.setState({input: evt.target.value});
-  }
-
-  handleKey(evt) {
-    if (evt.keyCode === 13) {
-      const message = {
-        author: 'react',
-        content: this.state.input
+  send(message) {
+    const data = {
+      author: this.state.author,
+      content: message
+    };
+    this.store.broadcast(data);
+    this.setState((prevState) => {
+      return {
+        input: '',
+        messages: prevState.messages.concat(data)
       };
-      this.store.broadcast(message);
-      this.setState((prevState) => {
-        return {
-          input: '',
-          messages: prevState.messages.concat(message)
-        };
-      });
-    }
+    });
   }
 }
 
