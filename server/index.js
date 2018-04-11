@@ -1,16 +1,30 @@
+// ========================================================================= //
+// 
+// Webserver for:
+//  server-side rendering of React app
+//  user authentication
+// 
+// ========================================================================= //
+
 import express from 'express';
-
-import renderer from './renderer';
-
-const port = 8080;
 const path = require('path');
 
+import renderer from './renderer';
+import authenticator from './authenticator';
+
 const app = express();
-const router = express.Router();
+const port = 8080;
 
-router.use('*', renderer);
+app.get('^/$', renderer);
+app.get('^/auth', authenticator.authenticate('twitch-token'));
+app.get(express.static(
+    path.resolve(__dirname, '..', 'build'),
+    { maxAge: '30d' },
+));
 
-app.use(router);
+app.configure(() => {
+  app.use(authenticator.initialize())
+});
 
 app.listen(port, (e) => {
   if (e) {
