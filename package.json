@@ -16,13 +16,22 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "sync": "node --require 'dotenv/config' --require 'babel-register' ./server/sync.js",
+    "server": "nodemon --exec 'node -r dotenv/config' server/run.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react-app": "^3.1.1",
-    "ignore-styles": "^5.0.1"
+    "dotenv": "^5.0.1",
+    "ignore-styles": "^5.0.1",
+    "nodemon": "^1.17.3"
+  },
+  "babel": {
+    "presets": ["env"]
   }
 }

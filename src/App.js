@@ -4,6 +4,7 @@ import update from 'react-addons-update';
 import { StreamScreen } from './stream';
 import Nav from './nav';
 import { Modal, ModalContext, content } from './modal';
+import { UserContext, userState } from './user';
 import './app.css';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
 
     // 
     // Context transformer methods
+    // tfw you accidentally roll your own redux
     // 
 
     this.close = () => {
@@ -38,6 +40,10 @@ class App extends Component {
         hi: this.hi,
         subscribe: this.subscribe,
         close: this.close
+      },
+      auth: {
+        user: userState.user,
+        twitchConfig: userState.twitchConfig
       }
     };
   }
@@ -45,11 +51,13 @@ class App extends Component {
   render() {
     return (
       <div className="root vertical container">
+        <UserContext.Provider value={this.state.auth}>
         <ModalContext.Provider value={this.state.modal}>
           <Nav />
           <StreamScreen />
           <Modal />
         </ModalContext.Provider>
+        </UserContext.Provider>
       </div>
     );
   }

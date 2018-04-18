@@ -24,7 +24,7 @@ const content = {
   }
 };
 
-const ModalContext = React.createContext({ mode: content });
+const ModalContext = React.createContext({ mode: content.hi });
 
 const ModalContent = (props) => {
   return (

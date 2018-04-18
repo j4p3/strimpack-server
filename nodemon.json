@@ -1,0 +1,9 @@
+{
+  "watch": [
+    "./build"
+  ],
+  "ext": "js,html,css",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

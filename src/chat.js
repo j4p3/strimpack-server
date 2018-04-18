@@ -154,8 +154,10 @@ class Chat extends Component {
   }
 
   send(message) {
+    // @todo grab user info from authcontext
     const data = {
       author: this.state.author,
+      userId: 1,
       content: message
     };
     this.store.broadcast(data);

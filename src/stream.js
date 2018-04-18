@@ -5,7 +5,7 @@ import './stream.css';
 
 export const Stream = (props) => {
   return (
-    <h1>here
+    <h1>has this been autobuilt on change? without infinitely looping? how about now? 
     {/*<iframe
           title="stream"
           className="embedded"
