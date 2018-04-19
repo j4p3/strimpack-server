@@ -6,13 +6,13 @@ import './nav.css';
 
 const Login = (props) => {
   return (
-    <a href={`https://id.twitch.tv/oauth2/authorize?client_id=${props.twitchConfig.clientId}&redirect_uri=${props.twitchConfig.redirectUri}&response_type=code&scope=user:read:email&state=${props.twitchConfig.oauthState}`}><li><b>Login</b></li></a>
+    <a href='/auth'><li><b>Login</b></li></a>
   )
 }
 
 const UserMenu = (props) => {
   return (
-    <a href="/"><li><b>{props.user.username}</b></li></a>
+    <a href="/"><li><b>Logged In</b></li></a>
   )
 }
 
@@ -42,7 +42,7 @@ class Nav extends Component {
                     if (userContext.user) {
                       return (<UserMenu user={userContext.user} />);
                     } else {
-                      return (<Login twitchConfig={userContext.twitchConfig} />);
+                      return (<Login />);
                     }
                   }}
                 </UserContext.Consumer>

@@ -1,11 +1,12 @@
 {
   "name": "strimpack",
-  "version": "0.1.0",
+  "description": "ssr client application for streaming service",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "express": "^4.16.3",
     "passport": "^0.4.0",
-    "passport-twitch-token": "^2.1.0",
+    "passport-oauth2": "^1.4.0",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
     "react": "^16.3.0",
@@ -17,7 +18,7 @@
   "scripts": {
     "start": "react-scripts start",
     "sync": "node --require 'dotenv/config' --require 'babel-register' ./server/sync.js",
-    "server": "nodemon --exec 'node -r dotenv/config' server/run.js",
+    "server": "nodemon --exec 'node --require dotenv/config --require babel-register --inspect=9229 server/run.js'",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -32,6 +33,8 @@
     "nodemon": "^1.17.3"
   },
   "babel": {
-    "presets": ["env"]
+    "presets": [
+      "env"
+    ]
   }
 }
