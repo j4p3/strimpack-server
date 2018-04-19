@@ -5,8 +5,9 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
 const DB_HOST = process.env.DB_HOST;
 const DB_PORT = process.env.DB_PORT;
+const connection = `${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
 
-const db = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`);
+const db = new Sequelize('postgres://' + connection);
 
 const User = db.define('user', {
   username: { type: Sequelize.STRING, unique: true },
@@ -36,4 +37,18 @@ const StripeSubscription = db.define('subscription', {
   underscored: true,
 });
 
-export { db, User, StripeSubscription };
+const Session = db.define('session', {
+  sid: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+    deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
+  },
+  sess: Sequelize.JSON,
+  expire: Sequelize.DATE(6)
+}, {
+  timestamps: false,
+  underscored: true,
+  freezeTableName: true,
+});
+
+export { db, connection, User, StripeSubscription };

@@ -14,6 +14,8 @@ export default (req, res, next) => {
       return res.status(500).end();
     }
 
+    // @todo render app preloaded for user
+    // console.log(req.session.passport.user);
     const html = ReactDOMServer.renderToString(<App />);
 
     return res.send(template.replace(

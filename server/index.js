@@ -6,29 +6,39 @@
 // 
 // ========================================================================= //
 
-const path = require('path');
 import express from 'express';
+const session = require('express-session');
+const pgSession = require('connect-pg-simple')(session);
+const path = require('path');
 
+import { connection } from './db';
 import renderer from './renderer';
 import authenticator from './authenticator';
 
 const SERVER_PORT = process.env.SERVER_PORT;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+const DATABASE_URL = 'pg://' + connection; // weirdness going on with imports
 const app = express();
 
+app.use(session({
+  store: new pgSession({ conString: DATABASE_URL }),
+  secret: SESSION_SECRET,
+  saveUninitialized: false,
+  resave: false,
+  cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days 
+}));
 app.use(authenticator.initialize());
+app.use(authenticator.session());
 app.use((req, res, next) => {
   res.set('X-Clacks-Overhead', 'GNU Terry Pratchet');
   next();
 });
 
 app.get('/auth', authenticator.authenticate('oauth2'));
-app.get('/auth/twitch', (req, res, next) => {
-  authenticator.authenticate('oauth2', (e, user, info, status) => {
-    if (e) { console.log(e); return next(e); }
-    // @todo log in user here? add to session?
-    res.redirect('/') // kill token
-  })(req, res, next);
-});
+app.get('/auth/twitch', authenticator.authenticate(
+  'oauth2',
+  { failureRedirect: '/fail' }),
+  (req, res) => { res.redirect('/'));
 app.get('/$', renderer);
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
