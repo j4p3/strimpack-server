@@ -1,3 +1,10 @@
+// ========================================================================= //
+// 
+// Root JS file for clientside stream application
+// 
+// ========================================================================= //
+
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';

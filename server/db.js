@@ -9,12 +9,17 @@ const DB_PORT = process.env.DB_PORT;
 const db = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`);
 
 const User = db.define('user', {
-  username: Sequelize.STRING,
-  email: Sequelize.STRING,
+  username: { type: Sequelize.STRING, unique: true },
+  email: { type: Sequelize.STRING, unique: true },
   subscription_level: Sequelize.INTEGER,
+  twitch_id: { type: Sequelize.STRING, unique: true },
+  twitch_username: { type: Sequelize.STRING, unique: true },
+  twitch_profile_image: Sequelize.STRING,
+  twitch_access_token: Sequelize.STRING,
+  twitch_refresh_token: Sequelize.STRING,
 }, {
   timestamps: true,
-  underscored: true
+  underscored: true,
 });
 
 const StripeSubscription = db.define('subscription', {
@@ -28,22 +33,7 @@ const StripeSubscription = db.define('subscription', {
   }
 }, {
   timestamps: true,
-  underscored: true
-})
-
-const TwitchAuthentication = db.define('authentication', {
-  // @todo: store access/refresh token? what does twitch send back?
-  user_id: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: User,
-      key: 'id'
-    }
-  }
-}, {
-  timestamps: true,
-  underscored: true
+  underscored: true,
 });
 
-
-export { db, User, StripeSubscription, TwitchAuthentication };
+export { db, User, StripeSubscription };
