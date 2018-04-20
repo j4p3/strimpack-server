@@ -11,12 +11,17 @@
 
   overflow-y: scroll;
   padding: 1em 1em;
-  color: #fff;
 }
 
 .message {
   line-height: 1.5em;
   margin-bottom: .25em;
+  
+  color: #fffc;
+}
+
+.message b {
+  color: #fff;
 }
 
 .input {

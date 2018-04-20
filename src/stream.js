@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { UserContext } from './user';
 import Chat from './chat';
 import './global.css';
 import './stream.css';
@@ -27,7 +29,9 @@ export const StreamScreen = (props) => {
           <Stream />
         </main>
         <aside className="chat"><div className="inner">
-          <Chat />
+          <UserContext.Consumer>
+            {context => <Chat user={context.user} />}
+          </UserContext.Consumer>
         </div></aside>
       </section>
   );

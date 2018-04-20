@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+
 import Store from './store';
 import './global.css'
 import './chat.css'
 
 
+// 
+// Expects property:
+//  `send` function
+// 
 class MessageInput extends Component {
   constructor(props) {
-    // 
-    // Expected property: 'send' function
-    // 
     if (!props.hasOwnProperty('send')) {
       throw new Error('MessageInput Missing }send prop.')
     }
@@ -103,6 +105,10 @@ class MessageList extends Component {
   }
 }
 
+// 
+// Expects property:
+//  `user` object
+// 
 class Chat extends Component {
   // 
   // Lifecycle
@@ -111,11 +117,7 @@ class Chat extends Component {
     super(props);
 
     this.state = {
-      messages: [{
-        author: 'Test',
-        content: 'Foo'
-      }],
-      author: 'Test'
+      messages: [],
     };
 
     this.send = this.send.bind(this);
@@ -154,11 +156,10 @@ class Chat extends Component {
   }
 
   send(message) {
-    // @todo grab user info from authcontext
     const data = {
-      author: this.state.author,
-      userId: 1,
-      content: message
+      author: this.props.user.username,
+      userId: this.props.user.id,
+      content: message,
     };
     this.store.broadcast(data);
     this.setState((prevState) => {
