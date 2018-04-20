@@ -6,13 +6,13 @@ import './nav.css';
 
 const Login = (props) => {
   return (
-    <a href='/auth'><li><b>Login</b></li></a>
+    <a href='/auth'><li>Login</li></a>
   )
 }
 
 const UserMenu = (props) => {
   return (
-    <a href="/"><li><b>Logged In</b></li></a>
+    <a href="/"><li>{props.username}</li></a>
   )
 }
 
@@ -40,7 +40,7 @@ class Nav extends Component {
                 <UserContext.Consumer>
                   {(userContext) => {
                     if (userContext.user) {
-                      return (<UserMenu user={userContext.user} />);
+                      return (<UserMenu {...userContext.user} />);
                     } else {
                       return (<Login />);
                     }

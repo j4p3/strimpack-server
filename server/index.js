@@ -34,12 +34,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/auth', authenticator.authenticate('oauth2'));
-app.get('/auth/twitch', authenticator.authenticate(
+app.get('^/auth', authenticator.authenticate('oauth2'));
+app.get('^/auth/twitch', authenticator.authenticate(
   'oauth2',
   { failureRedirect: '/fail' }),
-  (req, res) => { res.redirect('/'));
-app.get('/$', renderer);
+  (req, res) => res.redirect('/'));
+app.get('^/$', renderer);
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
 app.listen(SERVER_PORT, (e) => {

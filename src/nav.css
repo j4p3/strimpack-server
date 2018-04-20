@@ -3,6 +3,7 @@ nav {
   height: 0;
   display: none;
   background: #333;
+  border-bottom: 1px solid #444;
 }
 
 nav ul {

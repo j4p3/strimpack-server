@@ -1,6 +1,5 @@
 import React from 'react';
 
-// @todo check against session for user, render twitchconfig from env at build
 const userState = {
   user: null
 };

@@ -14,13 +14,23 @@ export default (req, res, next) => {
       return res.status(500).end();
     }
 
-    // @todo render app preloaded for user
-    // console.log(req.session.passport.user);
-    const html = ReactDOMServer.renderToString(<App />);
+    let user;
+    if (req.isAuthenticated()) {
+      user = {
+        id: req.user.id,
+        username:  req.user.username,
+        email:  req.user.email,
+        twitch_profile_image:  req.user.twitch_profile_image,
+      };
+    }
+
+    // @todo routing
+    // is it useful to add props here? app should render different html if there's a user logged in
+    const html = ReactDOMServer.renderToString(<App user={user} />);
 
     return res.send(template.replace(
       '<div id="root"></div>',
-      `<div id="root">${html}</div>`
+      `<div id="root">${html}</div><script>window.__DATA__='${JSON.stringify(user)}';</script>`
     ));
   });
 }

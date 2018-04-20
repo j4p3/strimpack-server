@@ -41,6 +41,9 @@
 }
 
 @media screen and (min-width: 959px) {
+  .container.chat-container {
+    border-top: 0;
+  }
   .input > .inner {
     height: 3em;
   }

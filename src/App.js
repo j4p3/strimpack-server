@@ -7,6 +7,9 @@ import { Modal, ModalContext, content } from './modal';
 import { UserContext, userState } from './user';
 import './app.css';
 
+// @todo expose this component as a module-level export
+// extract clientside stuff to separate repo
+// require in serverside package & import it there
 class App extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +18,11 @@ class App extends Component {
     // Context transformer methods
     // tfw you accidentally roll your own redux
     // 
+
+    let user = props.user;
+    if (typeof window !== 'undefined' && window.__DATA__) {
+      user = JSON.parse(window.__DATA__)
+    }
 
     this.close = () => {
       this.setState((state) => {
@@ -42,13 +50,13 @@ class App extends Component {
         close: this.close
       },
       auth: {
-        user: userState.user,
-        twitchConfig: userState.twitchConfig
+        user: user,
       }
     };
   }
 
   render() {
+    console.log('RENDERING ROOT')
     return (
       <div className="root vertical container">
         <UserContext.Provider value={this.state.auth}>
