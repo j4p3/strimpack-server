@@ -14,7 +14,7 @@ export default (req, res, next) => {
       return res.status(500).end();
     }
 
-    let user;
+    let user = {};
     if (req.isAuthenticated()) {
       user = {
         id: req.user.id,
@@ -25,7 +25,6 @@ export default (req, res, next) => {
     }
 
     // @todo routing
-    // is it useful to add props here? app should render different html if there's a user logged in
     const html = ReactDOMServer.renderToString(<App user={user} />);
 
     return res.send(template.replace(

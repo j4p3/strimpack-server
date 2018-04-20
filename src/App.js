@@ -19,11 +19,6 @@ class App extends Component {
     // tfw you accidentally roll your own redux
     // 
 
-    let user = props.user;
-    if (typeof window !== 'undefined' && window.__DATA__) {
-      user = JSON.parse(window.__DATA__)
-    }
-
     this.close = () => {
       this.setState((state) => {
         return update(state, {
@@ -50,13 +45,12 @@ class App extends Component {
         close: this.close
       },
       auth: {
-        user: user,
+        user: props.user,
       }
     };
   }
 
   render() {
-    console.log('RENDERING ROOT')
     return (
       <div className="root vertical container">
         <UserContext.Provider value={this.state.auth}>

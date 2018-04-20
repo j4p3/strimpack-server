@@ -1,6 +1,7 @@
 // ========================================================================= //
 // 
-// Root JS file for clientside stream application
+// Root JS file for clientside stream application.
+// Clientside entrypoint, hydrates DOM already rendered on server.
 // 
 // ========================================================================= //
 
@@ -11,5 +12,10 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-// registerServiceWorker();
+let user;
+if (window.__DATA__) {
+  user = JSON.parse(window.__DATA__)
+}
+
+ReactDOM.hydrate(<App user={user} />, document.getElementById('root'));
+registerServiceWorker();
