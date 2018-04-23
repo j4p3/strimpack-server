@@ -1,7 +1,7 @@
 {
   "name": "strimpack",
-  "description": "ssr client application for streaming service",
-  "version": "0.1.1",
+  "description": "node server for strimpack auth, ssr",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "connect-pg-simple": "^4.2.1",
@@ -12,28 +12,26 @@
     "passport-oauth2": "^1.4.0",
     "pg": "^7.4.1",
     "pg-hstore": "^2.3.2",
-    "react": "^16.3.0",
+    "react": "^16.3.2",
     "react-addons-update": "^15.6.2",
-    "react-dom": "^16.3.0",
+    "react-dom": "^16.3.2",
     "react-scripts": "1.1.1",
     "sequelize": "^4.37.6"
   },
   "scripts": {
-    "start": "react-scripts start",
     "sync": "node --require 'dotenv/config' --require 'babel-register' ./server/sync.js",
-    "server": "nodemon --exec 'node --require dotenv/config --require babel-register --inspect=9229 server/run.js'",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "nodemon --exec 'node --require dotenv/config --require babel-register --inspect=9229 server/run.js'",
+    "build": "babel lib -d dist",
+    "serve": "node dist/run.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
-    "babel-preset-react-app": "^3.1.1",
     "dotenv": "^5.0.1",
     "ignore-styles": "^5.0.1",
-    "nodemon": "^1.17.3"
+    "nodemon": "^1.17.3",
+    "strimpack-web-client": "file:../strimpack-web-client"
   },
   "babel": {
     "presets": [

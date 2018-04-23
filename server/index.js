@@ -40,7 +40,7 @@ app.get('^/auth/twitch', authenticator.authenticate(
   { failureRedirect: '/fail' }),
   (req, res) => res.redirect('/'));
 app.get('^/$', renderer);
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
+app.use(express.static(path.resolve(__dirname, '..', '..', 'strimpack-web-client', 'build')));
 
 app.listen(SERVER_PORT, (e) => {
   if (e) return console.error('webapp: server failure', e);

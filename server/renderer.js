@@ -1,20 +1,23 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import App from '../src/App';
+// @todo adjust filepath for deployed environments
+// import from npm module if not local?
+import App from '../../strimpack-web-client/src/App';
 
 const path = require('path');
 const fs = require('fs');
 
 export default (req, res, next) => {
-  const filePath = path.resolve(__dirname, '..', 'build', 'index.html');
+  // @todo adjust filepath for deployed environments
+  const filePath = path.resolve(__dirname, '..', '..', 'strimpack-web-client', 'build', 'index.html');
   fs.readFile(filePath, 'utf8', (e, template) => {
     if (e) {
       console.error('Loading HTML failed internally.', e);
       return res.status(500).end();
     }
 
-    let user = {};
+    let user = null;
     if (req.isAuthenticated()) {
       user = {
         id: req.user.id,
