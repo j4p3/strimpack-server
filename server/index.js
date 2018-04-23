@@ -43,6 +43,6 @@ app.get('^/$', renderer);
 app.use(express.static(path.resolve(__dirname, '..', '..', 'strimpack-web-client', 'build')));
 
 app.listen(SERVER_PORT, (e) => {
-  if (e) return console.error('webapp: server failure', e);
-  console.log('webapp: ssr server running on port ' + SERVER_PORT);
+  if (e) return console.error('strimpack: server failure', e);
+  console.log('strimpack: server running on port ' + SERVER_PORT);
 })

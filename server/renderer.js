@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 // @todo adjust filepath for deployed environments
-// import from npm module if not local?
+// import from npm module if not local? 
 import App from '../../strimpack-web-client/src/App';
 
 const path = require('path');
