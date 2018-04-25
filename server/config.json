@@ -1,0 +1,14 @@
+{
+  "title": "Stream",
+  "description": "Live broadcasting through Strimpack",
+  "channel": "chess",
+  "navItems": [{
+      "text": "Forums",
+      "href": "/forum"
+    }, {
+      "text": "Blog",
+      "href": "/blog"
+      }],
+  "logo": "logo.png",
+  "themeColor": "#bb6125"
+}

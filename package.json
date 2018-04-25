@@ -16,7 +16,13 @@
     "react": "^16.3.2",
     "react-addons-update": "^15.6.2",
     "react-dom": "^16.3.2",
-    "sequelize": "^4.37.6"
+    "sequelize": "^4.37.6",
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "dotenv": "^5.0.1",
+    "ignore-styles": "^5.0.1"
   },
   "scripts": {
     "sync": "node --require 'dotenv/config' --require 'babel-register' ./server/sync.js",
@@ -25,14 +31,7 @@
     "serve": "node --require 'dotenv/config' dist/run.js"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^7.1.4",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-preset-env": "^1.6.1",
-    "dotenv": "^5.0.1",
-    "ignore-styles": "^5.0.1",
-    "nodemon": "^1.17.3",
-    "strimpack-web-client": "file:../strimpack-web-client"
+    "nodemon": "^1.17.3"
   },
   "babel": {
     "presets": [

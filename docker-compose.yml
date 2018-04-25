@@ -1,0 +1,23 @@
+version: '2'
+services:
+  site:
+    depends_on:
+      - 'db'
+    build: .
+    volumes:
+      - '.:'
+    ports:
+      - '8080:8080'
+    env_file:
+      - '.env'
+  chat:
+    image: strimchat
+  forum:
+    image: discourse/base
+  db:
+    image: postgres
+    restart: always
+  lb:
+    image: rancher/lb-service-haproxy
+    ports:
+    - 80:80/tcp

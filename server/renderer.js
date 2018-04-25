@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-// @todo adjust filepath for deployed environments
-// import from npm module if not local? 
+import { Stream } from './db';
+
+import defaults from '../config.default.json';
+import config from '../config.json';
 import App from '../../strimpack-web-client/src/App';
 
 const path = require('path');
@@ -17,22 +19,30 @@ export default (req, res, next) => {
       return res.status(500).end();
     }
 
-    let user = null;
+    let data = {
+      stream: null,
+      user: null,
+    };
+
+    const stream = {...defaults, ...config};
+    data.stream = stream;
+
     if (req.isAuthenticated()) {
-      user = {
-        id: req.user.id,
-        username:  req.user.username,
-        email:  req.user.email,
-        twitch_profile_image:  req.user.twitch_profile_image,
+      const user = req.user;
+      data.user = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        twitch_profile_image: user.twitch_profile_image,
       };
     }
 
     // @todo routing
-    const html = ReactDOMServer.renderToString(<App user={user} />);
+    const html = ReactDOMServer.renderToString(<App user={user} config={stream} />);
 
     return res.send(template.replace(
       '<div id="root"></div>',
-      `<div id="root">${html}</div><script>window.__DATA__='${JSON.stringify(user)}';</script>`
+      `<div id="root">${html}</div><script>window.__DATA__='${JSON.stringify(data)}';</script>`
     ));
   });
 }

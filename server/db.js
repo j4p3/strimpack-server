@@ -23,12 +23,29 @@ const User = db.define('user', {
   underscored: true,
 });
 
-const StripeSubscription = db.define('subscription', {
-  // @todo store subscription details. maybe have a separate subscription app.
+const SubscriptionTier = db.define('subscription_tier', {
+  level: Sequelize.INTEGER,
+  title: Sequelize.STRING,
+  description: Sequelize.TEXT,
+  cost: Sequelize.INTEGER,
+}, {
+  timestamps: true,
+  underscored: true,
+});
+
+// @todo add creation hook to create subscription on stripe & create or error here
+const Subscription = db.define('subscription', {
   user_id: {
     type: Sequelize.INTEGER,
     references: {
       model: User,
+      key: 'id'
+    }
+  },
+  tier: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: SubscriptionTier,
       key: 'id'
     }
   }
@@ -51,4 +68,4 @@ const Session = db.define('session', {
   freezeTableName: true,
 });
 
-export { db, connection, User, StripeSubscription };
+export { db, connection, Stream, User, Subscription, SubscriptionTier };
