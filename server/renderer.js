@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import { Stream } from './db';
-
 import defaults from '../config.default.json';
 import config from '../config.json';
 import App from '../../strimpack-web-client/src/App';
 
 const path = require('path');
 const fs = require('fs');
+
+const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY;
 
 export default (req, res, next) => {
   // @todo adjust filepath for deployed environments
@@ -24,7 +24,8 @@ export default (req, res, next) => {
       user: null,
     };
 
-    const stream = {...defaults, ...config};
+    // @todo pull subscription tiers out of somewhere. db?
+    const stream = Object.assign(defaults, config, { stripeKey: stripeKey });
     data.stream = stream;
 
     if (req.isAuthenticated()) {
@@ -38,7 +39,8 @@ export default (req, res, next) => {
     }
 
     // @todo routing
-    const html = ReactDOMServer.renderToString(<App user={user} config={stream} />);
+    const html = ReactDOMServer.renderToString(
+      <App user={data.user} stream={data.stream} />);
 
     return res.send(template.replace(
       '<div id="root"></div>',

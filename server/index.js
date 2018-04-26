@@ -7,6 +7,7 @@
 // ========================================================================= //
 
 import express from 'express';
+const bodyParser = require('body-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const path = require('path');
@@ -14,6 +15,7 @@ const path = require('path');
 import { connection } from './db';
 import renderer from './renderer';
 import authenticator from './authenticator';
+import subscriber from './subscriber';
 
 const SERVER_PORT = process.env.SERVER_PORT;
 const SESSION_SECRET = process.env.SESSION_SECRET;
@@ -27,6 +29,7 @@ app.use(session({
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days 
 }));
+app.use(bodyParser.json());
 app.use(authenticator.initialize());
 app.use(authenticator.session());
 app.use((req, res, next) => {
@@ -39,6 +42,7 @@ app.get('^/auth/twitch', authenticator.authenticate(
   'oauth2',
   { failureRedirect: '/fail' }),
   (req, res) => res.redirect('/'));
+app.post('/subscribe', subscriber);
 app.get('^/$', renderer);
 app.use(express.static(path.resolve(__dirname, '..', '..', 'strimpack-web-client', 'build')));
 

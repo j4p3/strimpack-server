@@ -1,5 +1,8 @@
 import Sequelize from 'sequelize';
 
+import defaults from '../config.default.json';
+import config from '../config.json';
+
 const DB_USER = process.env.DB_USER;
 const DB_PASSWORD = process.env.DB_PASSWORD;
 const DB_NAME = process.env.DB_NAME;
@@ -28,6 +31,7 @@ const SubscriptionTier = db.define('subscription_tier', {
   title: Sequelize.STRING,
   description: Sequelize.TEXT,
   cost: Sequelize.INTEGER,
+  stripe_id: Sequelize.STRING,
 }, {
   timestamps: true,
   underscored: true,
@@ -48,7 +52,8 @@ const Subscription = db.define('subscription', {
       model: SubscriptionTier,
       key: 'id'
     }
-  }
+  },
+  stripe_id: Sequelize.STRING,
 }, {
   timestamps: true,
   underscored: true,
@@ -68,4 +73,11 @@ const Session = db.define('session', {
   freezeTableName: true,
 });
 
-export { db, connection, Stream, User, Subscription, SubscriptionTier };
+const seedSubscriptionTiers = () => {
+  const stream = Object.assign(defaults, config);
+  SubscriptionTier.bulkCreate(stream.subscriptionTiers).then(() => {
+    return Subscription.findAll();
+  }).then(subs => console.log(subs));
+}
+
+export { db, connection, User, Subscription, SubscriptionTier, seedSubscriptionTiers };
