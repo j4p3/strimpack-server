@@ -30,7 +30,7 @@
     "seed": "node --require 'dotenv/config' --require 'babel-register' ./server/seed.js",
     "start": "nodemon --exec 'node --require dotenv/config --require babel-register --inspect=9229 server/run.js'",
     "build": "babel server -d dist",
-    "serve": "node --require 'dotenv/config' dist/run.js"
+    "serve": "node dist/run.js"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"

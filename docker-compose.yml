@@ -1,23 +1,52 @@
-version: '2'
+version: '3.2'
 services:
+  client:
+    image: strimpack-web-client:master
+    volumes:
+      - client-assets:/usr/src/strimpack-web-client/
+    command: npm run build
   site:
+    image: strimpack:master
     depends_on:
       - 'db'
-    build: .
+      - 'client'
     volumes:
-      - '.:'
+      - client-assets:/usr/src/strimpack-web-client/
     ports:
       - '8080:8080'
     env_file:
-      - '.env'
+      - '.env.docker'
+  # chat_bootstrap:
+  #   image: strimchat:master
+  #   depends_on:
+  #     - 'db'
+  #   ports:
+  #     - '8082:8082'
+  #   env_file:
+  #     - '.env.docker'
+  #   command: node dist/sync.js && node dist/seed.js && npm run serve
   chat:
-    image: strimchat
-  forum:
-    image: discourse/base
+    image: strimchat:master
+    depends_on:
+      - 'db'
+    ports:
+      - '8082:8082'
+    env_file:
+      - '.env.docker'
+  # forum:
+  #   image: discourse/base
+  #   ports:
+  #     - '8083:80'
   db:
     image: postgres
     restart: always
-  lb:
-    image: rancher/lb-service-haproxy
+    env_file:
+      - '.env.docker'
     ports:
-    - 80:80/tcp
+      - '5432:5432'
+  # lb:
+  #   image: rancher/lb-service-haproxy
+  #   ports:
+  #   - 80:80/tcp
+volumes:
+  client-assets:

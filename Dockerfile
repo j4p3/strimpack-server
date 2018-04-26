@@ -1,8 +1,6 @@
 FROM node:alpine
 
-ENV CONTAINER_HOME=/src/strimpack
-RUN mkdir /src/strimpack-web-client
-VOLUME /src/strimpack-web-client
+ENV CONTAINER_HOME=/usr/src/strimpack
 WORKDIR $CONTAINER_HOME
 
 COPY package*.json ./
