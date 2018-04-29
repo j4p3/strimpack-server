@@ -26,11 +26,11 @@
     "stripe": "^5.8.0"
   },
   "scripts": {
-    "sync": "node --require 'dotenv/config' --require 'babel-register' ./server/sync.js",
-    "seed": "node --require 'dotenv/config' --require 'babel-register' ./server/seed.js",
     "start": "nodemon --exec 'node --require dotenv/config --require babel-register --inspect=9229 server/run.js'",
     "build": "babel server -d dist",
-    "serve": "node dist/run.js"
+    "serve": "node dist/run.js",
+    "sync": "node --require 'dotenv/config' --require 'babel-register' ./server/sync.js",
+    "seed": "node --require 'dotenv/config' --require 'babel-register' ./server/seed.js"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"
