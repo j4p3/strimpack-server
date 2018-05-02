@@ -17,8 +17,8 @@ import renderer from './renderer';
 import authenticator from './authenticator';
 import subscriber from './subscriber';
 
-const SERVER_PORT = process.env.SERVER_PORT;
-const SESSION_SECRET = process.env.SESSION_SECRET;
+const SERVER_PORT = process.env.STRIMPACK_SERVER_PORT;
+const SESSION_SECRET = process.env.STRIMPACK_SESSION_SECRET;
 const DATABASE_URL = 'pg://' + connection; // weirdness going on with imports
 const app = express();
 

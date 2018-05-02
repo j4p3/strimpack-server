@@ -1,12 +1,11 @@
-#Strimpack
+# Strimpack
 
 *Web server for strimpack service.*
 
 Express server rendering React app, authenticating requests, & processing payments.
 
-Written with ECMAwhatever and transpiled for node.
 
-##npm commands:
+## npm commands:
 
 * start:
 * sync:
@@ -14,8 +13,9 @@ Written with ECMAwhatever and transpiled for node.
 * build:
 * serve:
 
-##config
-###.env
+## config
+
+### .env
 Expects env vars:
 NODE_ENV
 TWITCH_CLIENT_ID
@@ -35,9 +35,11 @@ SESSION_SECRET
 STRIPE_PUBLISHABLE_KEY
 STRIPE_SECRET_KEY
 
-###config.json
+### config.json
 A convenient place to store config options to avoid hitting the DB for them every request. See `config.default.json` for full example.
-```{
+
+```
+{
   "title":
   "description":
   "channel": <Twitch.tv channel name>
@@ -54,9 +56,10 @@ A convenient place to store config options to avoid hitting the DB for them ever
       "title":
       "cost": <corresponds to Stripe plan cost>
     }]
-}```
+}
+```
 
-##made with:
+## made with:
 
 * node
 * express

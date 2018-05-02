@@ -1,3 +1,3 @@
-import { seedSubscriptionTiers } from './db'
+import { seedSubscriptionTiers } from './db';
 
 seedSubscriptionTiers();

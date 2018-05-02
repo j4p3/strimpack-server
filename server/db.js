@@ -75,9 +75,15 @@ const Session = db.define('session', {
 
 const seedSubscriptionTiers = () => {
   const stream = Object.assign(defaults, config);
-  SubscriptionTier.bulkCreate(stream.subscriptionTiers).then(() => {
+  return SubscriptionTier.bulkCreate(stream.subscriptionTiers).then(() => {
     return Subscription.findAll();
-  }).then(subs => console.log(subs));
+  }).then(subs => {
+    console.log(subs);
+    return;
+  }).catch((e) => {
+    console.log('\x1b[31m%s\x1b[0m', 'DB seed failed');
+    return;
+  });
 }
 
 export { db, connection, User, Subscription, SubscriptionTier, seedSubscriptionTiers };
