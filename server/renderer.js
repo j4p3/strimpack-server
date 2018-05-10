@@ -8,10 +8,13 @@ import App from '../../strimpack-web-client/src/App';
 const path = require('path');
 const fs = require('fs');
 
-const stripeKey = process.env.STRIPE_PUBLISHABLE_KEY;
+const STRIPE_KEY = process.env.STRIPE_PUBLISHABLE_KEY;
+const HOST = process.env.VIRTUAL_HOST;
+const THEME_COLOR = process.env.THEME_COLOR;
+const CHANNEL = process.env.STREAM_CHANNEL;
+const TITLE = process.env.STREAM_TITLE;
 
 export default (req, res, next) => {
-  // @todo adjust filepath for deployed environments
   const filePath = path.resolve(__dirname, '..', '..', 'strimpack-web-client', 'build', 'index.html');
   fs.readFile(filePath, 'utf8', (e, template) => {
     if (e) {
@@ -25,7 +28,13 @@ export default (req, res, next) => {
     };
 
     // @todo pull subscription tiers out of somewhere. db?
-    const stream = Object.assign(defaults, config, { stripeKey: stripeKey });
+    const stream = Object.assign(defaults, config, {
+      stripeKey: STRIPE_KEY,
+      host: HOST,
+      themeColor: THEME_COLOR,
+      channel: CHANNEL,
+      title: TITLE,
+    });
     data.stream = stream;
 
     if (req.isAuthenticated()) {
