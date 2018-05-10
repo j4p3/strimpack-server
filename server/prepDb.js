@@ -34,7 +34,7 @@ const seed = async () => {
 
 const prepareDb = () => {
   console.log('\x1b[32m%s\x1b[0m', 'DB preparation underway');
-  establish().then(() => {
+  return establish().then(() => {
     console.log('\x1b[32m%s\x1b[0m', 'DB syncing');
     return sync();
   }).then(() => {
@@ -66,38 +66,53 @@ const createOrFail = (pg) => {
   });
 }
 
-const connect = async () => {
-  console.log('\x1b[32m%s\x1b[0m', 'DB creating connection');
-  try {
-    const pg = new Client({
-      user: ROOT_USER,
-      password: ROOT_PASSWORD,
-      host: DB_HOST,
-      database: 'postgres',
-      port: DB_PORT,
-    });
-    await pg.connect();
-    return pg;
-  } catch (e) {
-    return e;
-  }
+const initializeClient = () => {
+  return new Client({
+    user: ROOT_USER,
+    password: ROOT_PASSWORD,
+    host: DB_HOST,
+    database: 'postgres',
+    port: DB_PORT,
+  });
 }
 
-connect().then((pg) => {
-  console.log('\x1b[32m%s\x1b[0m', 'DB connection established');
+const delay = (duration) => {
+  return new Promise((resolve) => setTimeout(resolve, duration));
+}
 
-  createOrFail(pg).then((creation) => {
+const connect = async (client) => {
+  console.log('\x1b[32m%s\x1b[0m', 'DB creating connection');
+  await delay(5000);
+  return client.connect().then(() => client).catch((e) => {
+    console.log('\x1b[31m%s\x1b[0m', 'DB awaiting connection');
+    return connect(initializeClient());
+  });
+}
+
+connect(initializeClient()).then((pg) => {
+  console.log('\x1b[32m%s\x1b[0m', 'DB connection established.');
+  return createOrFail(pg).then((creation) => {
     if (creation) {
       console.log('\x1b[32m%s\x1b[0m', 'DB creation completed.');
       return prepareDb();
     } else {
       console.log('\x1b[32m%s\x1b[0m', 'DB preparation already completed.');
+      exit();
     }
+  }).then((db) => {
+    console.log('\x1b[32m%s\x1b[0m', 'DB preparation completed.');
+    exit();
   }).catch((e) => {
     console.log('\x1b[31m%s\x1b[0m', 'DB setup failed');
+    exit();
   });
 }).catch((e) => {
   console.log(e);
-  console.log('\x1b[31m%s\x1b[0m', 'DB connection failed');
-})
+  console.log('\x1b[31m%s\x1b[0m', 'DB connection failed, exiting');
+  exit();
+});
+
+const exit = () => {
+  process.exit(0);
+}
 

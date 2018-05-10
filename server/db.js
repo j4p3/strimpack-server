@@ -79,10 +79,11 @@ const seedSubscriptionTiers = () => {
     return Subscription.findAll();
   }).then(subs => {
     console.log(subs);
-    return;
+    return subs;
   }).catch((e) => {
     console.log('\x1b[31m%s\x1b[0m', 'DB seed failed');
-    return;
+    console.log(e);
+    return e;
   });
 }
 
