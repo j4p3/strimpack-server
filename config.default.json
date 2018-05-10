@@ -1,35 +1,33 @@
 {
   "title": "Stream",
   "description": "Live broadcasting through Strimpack",
-  "channel": "chess",
+  "chatServer": "chat.docker.local",
+  "channel": "neuro",
   "navItems": [{
-      "text": "Forums",
-      "href": "/forum"
-    }, {
-      "text": "Blog",
-      "href": "/blog"
-      }],
+    "text": "Forums",
+    "href": "http://forum.docker.local"
+  }],
   "logo": "logo.png",
   "themeColor": "#bb6125",
   "subscriptionTiers": [
     {
       "level": 1,
-      "stripe_id": 1,
+      "stripe_id": "plan_CkZDxYdHQ6uksG",
       "title": "Basic",
       "cost": 500
     }, {
       "level": 2,
-      "stripe_id": 2,
+      "stripe_id": "plan_CkZCqCUs9l1bE6",
       "title": "Plus",
       "cost": 1000
     }, {
       "level": 3,
-      "stripe_id": 3,
+      "stripe_id": "plan_CkZCmQMrBx1jvv",
       "title": "Mega",
       "cost": 2000
     }, {
       "level": 4,
-      "stripe_id": 4,
+      "stripe_id": "plan_CkZDwEpXsDUPGT",
       "title": "Giga",
       "cost": 4000
     }

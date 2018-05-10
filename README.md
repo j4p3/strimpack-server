@@ -15,25 +15,30 @@ Express server rendering React app, authenticating requests, & processing paymen
 
 ## config
 
-### .env
-Expects env vars:
+### environment variables
+
+```
 NODE_ENV
 TWITCH_CLIENT_ID
 TWITCH_CLIENT_SECRET
 TWITCH_CALLBACK_URI
-DB_USER
-DB_PASSWORD
-DB_NAME
-DB_HOST
-DB_PORT
-POSTGRES_USER
-POSTGRES_PASSWORD
-POSTGRES_DB
-SERVER_HOST
-SERVER_PORT
-SESSION_SECRET
+
 STRIPE_PUBLISHABLE_KEY
 STRIPE_SECRET_KEY
+
+STRIMPACK_SERVER_HOST
+STRIMPACK_SERVER_PORT
+STRIMPACK_SESSION_SECRET
+
+STRIMPACK_DB_USER
+STRIMPACK_DB_PASSWORD
+STRIMPACK_DB_NAME
+STRIMPACK_DB_HOST
+STRIMPACK_DB_PORT
+
+POSTGRESQL_ROOT_USER
+POSTGRESQL_ROOT_PASSWORD
+```
 
 ### config.json
 A convenient place to store config options to avoid hitting the DB for them every request. See `config.default.json` for full example.
@@ -43,19 +48,18 @@ A convenient place to store config options to avoid hitting the DB for them ever
   "title":
   "description":
   "channel": <Twitch.tv channel name>
-  "navItems":
+  "navItems": [{
       "text": <what the nav link should say>
       "href": <where the nav link should go>
-    }],
+  }],
   "logo": <name of logo file e.g. logo.png>
   "themeColor": <hex or rgba value e.g. #fff>
-  "subscriptionTiers":
-    {
+  "subscriptionTiers": [{
       "level": <arbitrary number to differentiate tiers>
       "stripe_id": <corresponds to Stripe plan ID>
       "title":
       "cost": <corresponds to Stripe plan cost>
-    }]
+  }]
 }
 ```
 
